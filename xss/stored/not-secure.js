@@ -15,7 +15,6 @@ server.get('/', (req, res) => {
 });
 server.post('/submit-comment', (req, res) => {
     const { comment } = req.body;
-    console.log(comment);
 
     // Load existing comments from file
     let comments = [];
