@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search test</title>
+</head>
+<body>
+
+<form id="search-form">
+    <label for="search-query">Search:</label>
+    <input type="text" id="search-query" name="query">
+    <button type="submit">Submit</button>
+</form>
+<script>
+    document.getElementById("search-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        var query = document.getElementById("search-query").value;
+        window.location.href = "/search?query=" + encodeURIComponent(query); // Include the query parameter in the URL
+    });
+</script>
+
+</body>
+</html>

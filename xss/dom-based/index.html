@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+
+<p id="search-results"></p>
+
+Search for
+<script>
+    var pos=document.URL.indexOf("query=")+6;
+    document.write(decodeURIComponent(document.URL.substring(pos)));
+</script>
+</body>
+</html>
