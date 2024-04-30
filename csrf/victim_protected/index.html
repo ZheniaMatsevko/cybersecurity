@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Victim protected</title>
+
+    <style>
+        body {
+            font-size: 20px;
+            background: #b9c5e1;
+            text-align:center;
+            margin: 50px 0 0 0;
+        }
+        button {
+            font-size: 30px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .orders {
+            width: 50%;
+        }
+
+        .messages {
+            width: 50%;
+        }
+
+        .items {
+            margin: auto;
+            width: 400px;
+        }
+        .item {
+            background: gray;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .chat-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+        }
+        .chat-box img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1> Buy anything you want :)</h1>
+
+<div class="container">
+    <div class="orders">
+        <h2>
+            My orders:
+        </h2>
+
+        <div id="items" class="items">
+
+        </div>
+    </div>
+    <div class="messages">
+        <h2>Order:</h2>
+        <label for="item-input">Item:</label>
+        <input id="item-input" type="text">
+        <label for="address-input">Address:</label>
+        <input id="address-input" type="text">
+        <h2 id="message"></h2>
+        <button  onclick="kupi()">Order</button>
+    </div>
+</div>
+<!-- Chat-like section -->
+<div class="chat-box">
+    <img src="https://i.ibb.co/ccZ8Ngg/hacker.jpg" alt="Profile Picture">
+    <p>Hey there! Check out this cat video: <a href="http://localhost:3000/" target="_blank">Suspicious Link</a></p>
+</div>
+<script>
+    function kupi () {
+        const message = document.getElementById('message');
+        const items = document.getElementById('items');
+        const item = document.getElementById('item-input');
+        const address = document.getElementById('address-input');
+
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        fetch('/buy', {
+            method: "POST",
+            body: JSON.stringify({
+                item: item.value,
+                address: address.value
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                // https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html#use-of-custom-request-headers
+                // The CSRF token can be added through hidden fields or headers
+
+                // Inserting the CSRF token in the custom HTTP request header via JavaScript is
+                // considered more secure than adding the token in the hidden field form parameter
+                // because it uses custom request headers.
+
+                // This defence relies on the same-origin policy (SOP) restriction
+                // that only JavaScript can be used to add a custom header, and only within its origin.
+                'CSRF-Token': token
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                items.innerHTML = ''
+                data.payload.orders.forEach(order => {
+                    items.innerHTML += `<div class="item">
+                                    <div>Buyer: <b>${order.buyer}</b></div>
+                                    <div>Address: <b>${order.address}</b></div>
+                                    <div>Item: <b>${order.item}</b></div>
+                                </div>`
+                });
+                message.innerHTML = data.msg;
+            });
+    }
+</script>
+</body>
+</html>
