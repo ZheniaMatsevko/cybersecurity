@@ -10,16 +10,14 @@ console.log('Server is running on port 3000');
 server.use(express.static(__dirname));
 
 server.get('/', function(req, res){
-    console.log("Під'єднання від дорогоцінного клієнта!");
     res.sendFile(__dirname+"/index.html");
 });
 
 server.get('/reply', function(req, res){
-    console.log("Отримано запит від форми");
-    console.log("Введене число - "+req.query.data);
-    const searchQuery = req.query.data;
+
+    const input = req.query.data;
     res.send(`<!DOCTYPE html>
 <html lang="es-ES"><body>
-<p>Searched query: ${searchQuery}</p>
+<p>Searched query: ${input}</p>
 </body></html>`);
 });

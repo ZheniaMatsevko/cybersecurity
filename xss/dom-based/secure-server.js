@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'index-secure.html'));
 });
 
 // Start the server

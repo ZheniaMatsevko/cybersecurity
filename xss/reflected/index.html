@@ -2,27 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Demo validation</title>
+    <title>Reflected XSS</title>
 </head>
 <body>
-<form action="/reply" method="get"
-      id="fid" onsubmit="return f_submit(event);">
-    Введіть число менше за 10
-    <br/>
-    <input type="text" name="data"/>
-    <br/>
-    <br/>
-    <input type="submit" value="Do it"/>
+<form id="search-form" action="/reply" method="get">
+    <label for="search-query">Search:</label>
+    <input type="text" id="search-query" name="data">
+    <button type="submit">Submit</button>
 </form>
-<script>
-    function f_submit(event) {
-        let v = document.forms["fid"].data.value;
-        if (v >= 10) {
-            window.alert("Wrong input = " + v + "!");
-            event.preventDefault(); 
-        }
-    }
-</script>
 </body>
 </html>
 

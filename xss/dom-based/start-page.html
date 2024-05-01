@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Search test</title>
+    <title>DOM-based XSS</title>
 </head>
 <body>
 
@@ -15,7 +15,7 @@
     document.getElementById("search-form").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent default form submission
         var query = document.getElementById("search-query").value;
-        window.location.href = "/search?query=" + encodeURIComponent(query); // Include the query parameter in the URL
+        window.location.href = "/search?query=" + encodeURIComponent(query);
     });
 </script>
 
